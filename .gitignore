@@ -1,5 +1,22 @@
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Ambientes Virtuais (Essencial para você) ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- IDEs (JetBrains / VS Code) ---
+.idea/
+.vscode/
+*.swp
+
+# --- Variáveis de Ambiente (SEGURANÇA CRÍTICA) ---
+.env
+
+# --- Sistema Operacional ---
+.DS_Store
+Thumbs.db
