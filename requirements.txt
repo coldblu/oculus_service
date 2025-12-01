@@ -1,0 +1,28 @@
+# Framework da API e servidor
+fastapi
+uvicorn[standard]
+
+# Para lidar com Uploads de arquivos
+python-multipart
+
+# Ponte Python para o Tesseract
+pytesseract
+
+# Biblioteca de manipulação de imagens (dependência do Tesseract e pdf2image)
+Pillow
+
+# Biblioteca de NLP para "Extrair Objetos" (NER)
+spacy
+
+# Modelo de linguagem em Português para o spaCy
+# (Não o colocamos aqui, o instalamos separadamente ou no Dockerfile)
+# Vamos baixar no Dockerfile. Alteração no Dockerfile acima (feita).
+
+# Ponte Python para o Poppler (conversão de PDF)
+pdf2image
+
+#Celery: O gerenciador de tarefas
+celery
+
+#Redis: O "driver" para se conectar ao broker Redis
+redis

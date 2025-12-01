@@ -1,0 +1,38 @@
+#version: '3.8'
+services:
+  # 1. O SERVIDOR WEB (O que você já tem)
+  oculus_api:
+    build: .
+    container_name: oculus_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/code/app
+    # A API agora depende do Redis (caso você queira chamar tarefas de dentro dela)
+    depends_on:
+      - redis_broker
+    # Reinicia o servidor se ele falhar
+    restart: always
+
+  # 2. O BROKER DA FILA (Novo Serviço)
+  redis_broker:
+    image: redis:7-alpine
+    container_name: oculus_redis
+    ports:
+      # Expõe a porta do Redis para o host (opcional, bom para debug)
+      - "6379:6379"
+    restart: always
+
+  # 3. O WORKER (Novo Serviço)
+  oculus_worker:
+    build: .
+    container_name: oculus_worker
+    volumes:
+      - ./app:/code/app
+    # Este é o ponto-chave: Sobrescrevemos o CMD do Dockerfile
+    # Ele roda o "worker" do Celery, que escuta a fila.
+    command: celery -A app.celery_config:celery_app worker --loglevel=info
+    # O Worker DEVE depender do Redis para se conectar
+    depends_on:
+      - redis_broker
+    restart: always
